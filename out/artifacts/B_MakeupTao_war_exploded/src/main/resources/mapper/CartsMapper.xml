@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--三表查询购物车 -->
+<mapper namespace="com.ssm.mapper.CartsMapper">
+    <resultMap id="BaseCarts" type="com.ssm.pojo.Carts" >
+        <id column="cart_id" property="cart_id" jdbcType="BIGINT" />
+        <result column="user_id" property="user_id" jdbcType="VARCHAR" />
+        <result column="cart_num" property="cart_num" jdbcType="BIGINT" />
+        <result column="pro_shop_id" property="pro_shop_id" jdbcType="BIGINT" />
+        <association property="pro_shop" javaType="com.ssm.pojo.Pro_shop">
+            <id column="pro_shop_id" property="pro_shop_id" />
+            <result column="product_id" property="product_id"/>
+            <result column="shop_id" property="shop_id"/>
+            <result column="pro_shop_pic" property="pro_shop_pic"/>
+            <result column="pro_shop_price" property="pro_shop_price"/>
+            <result column="pro_shop_oldprice" property="pro_shop_oldprice"/>
+            <result column="pro_shop_num" property="pro_shop_num"/>
+            <result column="pro_shop_state" property="pro_shop_state"/>
+            <result column="pro_shop_spec" property="pro_shop_spec"/>
+            <result column="pro_shop_desc" property="pro_shop_desc"/>
+            <result column="pro_shop_sale" property="pro_shop_sale"/>
+            <result column="pro_shop_time" property="pro_shop_time"/>
+            <result column="pro_shop_look" property="pro_shop_look"/>
+            <result column="pro_shop_kind" property="pro_shop_kind"/>
+            <result column="pro_shop_brand" property="pro_shop_brand"/>
+        </association>
+        <association property="shops" javaType="com.ssm.pojo.Shops">
+            <id column="shop_id" property="shop_id" />
+            <result column="shop_name" property="shop_name"/>
+            <result column="shop_tel" property="shop_tel"/>
+            <result column="shop_address" property="shop_address"/>
+        </association>
+        <association property="address" javaType="com.ssm.pojo.Address">
+            <id column="address_id" property="address_id" />
+            <result column="user_id" property="user_id"/>
+            <result column="address_name" property="address_name"/>
+            <result column="address_tel" property="address_tel"/>
+            <result column="address_add" property="address_add"/>
+            <result column="address_state" property="address_state"/>
+        </association>
+    </resultMap>
+
+
+
+    <insert id="addCarts" parameterType="com.ssm.pojo.Carts">
+        INSERT INTO carts(user_id,pro_shop_id,cart_num) VALUES (#{user_id},#{pro_shop_id},#{cart_num})
+    </insert>
+
+    <select id="selectAll" resultType="com.ssm.pojo.Carts">
+        SELECT * FROM carts
+    </select>
+
+    <update id="updataNum" parameterType="com.ssm.pojo.Carts" >
+      UPDATE carts SET cart_num=#{cart_num}+cart_num where user_id=#{user_id}  and pro_shop_id=#{pro_shop_id}
+
+</update>
+
+<update id="updateNum" parameterType="com.ssm.pojo.Carts" >
+UPDATE carts SET cart_num=#{cart_num} where user_id=#{user_id}  and pro_shop_id=#{pro_shop_id}
+
+</update>
+
+
+    <delete id="deleteCarts" parameterType="com.ssm.pojo.Carts">
+DELETE FROM carts WHERE pro_shop_id=#{pro_shop_id} AND user_id=#{user_id}
+    </delete>
+
+
+    <select id="selectCarts" resultMap="BaseCarts">
+        SELECT pro_shop_num,carts.user_id,shop_name,pro_shop_pic,pro_shop_price,pro_shop_oldprice,pro_shop_spec,pro_shop_desc,cart_num,pro_shop_num,pro_shop_state FROM carts,pro_shop,shops
+        WHERE pro_shop.shop_id=shops.shop_id AND carts.pro_shop_id=pro_shop.pro_shop_id  AND carts.user_id=#{user_id}
+    </select>
+
+    <select id="selectOrders" resultMap="BaseCarts">
+        SELECT pro_shop_num,address_id,address_name,address_add,address_tel,carts.user_id,shop_name,pro_shop_pic,pro_shop_price,pro_shop_oldprice,pro_shop_spec,pro_shop_desc,cart_num,pro_shop_num,pro_shop_state FROM address,carts,pro_shop,shops
+        WHERE pro_shop.shop_id=shops.shop_id AND carts.pro_shop_id=pro_shop.pro_shop_id AND address.user_id=carts.user_id  AND carts.user_id=#{user_id} AND address_state=1
+    </select>
+
+    <!--<select id="selectAddress" resultType="com.ssm.pojo.Address">-->
+<!--SELECT   FROM address WHERE  user_id=#{user_id}-->
+<!--</select>-->
+ </mapper>

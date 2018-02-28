@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.mapper.Login">
+    <resultMap id="selectByUsername" type="com.ssm.pojo.Users">
+        <id property="user_id" column="user_id"/>
+        <result property="user_name" column="user_name"/>
+        <result property="user_password" column="user_password"/>
+        <result property="user_sex" column="user_sex"/>
+        <result property="user_card" column="user_card"/>
+        <result property="user_tel" column="user_tel"/>
+        <result property="user_photo" column="user_photo"/>
+        <result property="user_email" column="user_email"/>
+    </resultMap>
+
+    <resultMap id="addUser" type="com.ssm.pojo.Users">
+        <id property="user_id" column="user_id"/>
+        <result property="user_name" column="user_name"/>
+        <result property="user_password" column="user_password"/>
+        <result property="user_sex" column="user_sex"/>
+        <result property="user_card" column="user_card"/>
+        <result property="user_tel" column="user_tel"/>
+        <result property="user_photo" column="user_photo"/>
+        <result property="user_email" column="user_email"/>
+    </resultMap>
+
+    <resultMap id="selectUsername" type="com.ssm.pojo.Users">
+        <id property="user_id" column="user_id"/>
+        <result property="user_name" column="user_name"/>
+        <result property="user_password" column="user_password"/>
+        <result property="user_sex" column="user_sex"/>
+        <result property="user_card" column="user_card"/>
+        <result property="user_tel" column="user_tel"/>
+        <result property="user_photo" column="user_photo"/>
+        <result property="user_email" column="user_email"/>
+    </resultMap>
+
+    <select id="selectByUsername" resultType="com.ssm.pojo.Users" parameterType="String">
+        SELECT *
+        FROM users
+        WHERE user_name=#{user_name}
+    </select>
+
+    <insert id="addUser" parameterType="com.ssm.pojo.Users" useGeneratedKeys="true" keyProperty="user_id">
+        INSERT INTO users
+        (user_name,user_password,user_sex,user_card,
+        user_tel,user_photo,user_email)
+        VALUES (#{user_name},#{user_password},#{user_sex},#{user_card},
+        #{user_tel},#{user_photo},#{user_email})
+    </insert>
+
+    <select id="selectUsername" parameterType="String" resultType="String">
+        SELECT user_password
+        FROM users
+        WHERE user_name=#{user_name}
+    </select>
+
+
+    <resultMap id="infomix" type="com.ssm.po.infomix">
+        <id column="userinfo_id" property="userinfo_id"/>
+        <result column="user_id" property="user_id"/>
+        <result column="userinfo_nickname" property="userinfo_nickname"/>
+        <result column="userinfo_bir" property="userinfo_bir"/>
+        <result column="userinfo_sign" property="userinfo_sign"/>
+            <result column="user_tel" property="user_tel"/>
+            <result column="user_photo" property="user_photo"/>
+            <result column="user_sex" property="user_sex"/>
+    </resultMap>
+    <select id="selectInfo" resultMap="infomix" parameterType="int">
+        SELECT
+            a.user_sex,
+            a.user_tel,
+            a.user_photo,
+            b.userinfo_nickname,
+            b.userinfo_bir,
+            b.userinfo_sign
+        FROM
+            users a,
+            userinfo b
+        WHERE
+            a.user_id=#{user_id}
+            AND a.user_id=b.user_id
+    </select>
+
+    <resultMap id="insertInfo" type="com.ssm.pojo.Userinfo">
+        <id column="userinfo_id" property="userinfo_id"/>
+        <result column="user_id" property="user_id"/>
+        <result column="userinfo_nickname" property="userinfo_nickname"/>
+        <result column="userinfo_bir" property="userinfo_bir"/>
+        <result column="userinfo_sign" property="userinfo_sign"/>
+    </resultMap>
+
+    <insert id="insertInfo" parameterType="com.ssm.pojo.Userinfo">
+        INSERT INTO userinfo
+        (user_id,userinfo_nickname,userinfo_bir,userinfo_sign)
+                VALUES (#{user_id},#{userinfo_nickname},
+                #{userinfo_bir},#{userinfo_sign})
+    </insert>
+
+    <resultMap id="collect" type="com.ssm.po.collectInfo">
+        <id property="collect_id" column="collect_id"/>
+        <result property="user_id" column="user_id"/>
+        <result property="pro_shop_id" column="pro_shop_id"/>
+        <result property="pro_shop_desc" column="pro_shop_desc"/>
+        <result property="pro_shop_pic" column="pro_shop_pic"/>
+        <result property="pro_shop_price" column="pro_shop_price"/>
+        <result property="pro_shop_time" column="pro_shop_time"/>
+    </resultMap>
+
+    <select id="collect" resultMap="collect" parameterType="int">
+        SELECT a.pro_shop_pic,a.pro_shop_price,a.pro_shop_desc,a.pro_shop_time
+        FROM pro_shop a,collect b
+        WHERE b.user_id=#{user_id} AND b.pro_shop_id=a.pro_shop_id
+        ORDER BY a.pro_shop_time
+    </select>
+
+    <resultMap id="address" type="com.ssm.pojo.Address">
+        <id property="address_id" column="address_id"/>
+        <result property="user_id" column="user_id"/>
+        <result property="address_name" column="address_name"/>
+        <result property="address_tel" column="address_tel"/>
+        <result property="address_add" column="address_add"/>
+        <result property="address_state" column="address_state"/>
+    </resultMap>
+
+    <select id="selectAddress" resultMap="address" parameterType="int">
+        SELECT *
+        FROM address
+        WHERE user_id=#{user_id}
+    </select>
+
+    <resultMap id="feet" type="com.ssm.po.feetInfo">
+        <id property="feet_id" column="feet_id"/>
+        <result property="pro_shop_id" column="pro_shop_id"/>
+        <result property="feet_time" column="feet_time"/>
+        <result property="pro_shop_pic" column="pro_shop_pic"/>
+        <result property="user_id" column="user_id"/>
+        <result property="pro_shop_price" column="pro_shop_price"/>
+    </resultMap>
+
+    <select id="selectFeet" resultMap="feet" parameterType="int">
+        SELECT a.pro_shop_id,b.pro_shop_pic,a.feet_time,b.pro_shop_price,a.feet_id
+        FROM Feet a,Pro_shop b
+        WHERE a.user_id=#{user_id} AND a.pro_shop_id=b.pro_shop_id
+        ORDER BY a.feet_time
+    </select>
+
+    <resultMap id="default" type="com.ssm.pojo.Address">
+        <id property="address_id" column="address_id"/>
+        <result property="address_id" column="address_id"/>
+    </resultMap>
+
+    <select id="selectDefaultAddress" resultMap="default" parameterType="com.ssm.pojo.Address">
+        SELECT address_id
+        FROM address
+        WHERE user_id=#{user_id} AND address_state=#{address_state}
+    </select>
+
+    <update id="updateDefaultAddress" parameterType="com.ssm.pojo.Address">
+        UPDATE address
+        SET address_state = #{address_state}
+        WHERE user_id=#{user_id} AND address_id=#{address_id}
+    </update>
+
+    <update id="updateTel" parameterType="com.ssm.pojo.Users">
+        UPDATE users
+        SET user_tel = #{user_tel}
+        WHERE user_id=#{user_id}
+    </update>
+
+    <update id="updatePass" parameterType="com.ssm.pojo.Users">
+        UPDATE users
+        SET user_password = #{user_password}
+        WHERE user_id=#{user_id}
+    </update>
+
+    <resultMap id="selectPassword" type="String">
+        <result property="user_password" column="user_password"/>
+    </resultMap>
+
+    <select id="selectPass" resultMap="selectPassword" parameterType="int">
+        SELECT user_password
+        FROM users
+        WHERE user_id=#{user_id}
+    </select>
+
+    <resultMap id="selectUserid" type="int">
+        <id property="user_id" column="user_id"/>
+    </resultMap>
+
+    <select id="selectuserid" parameterType="String" resultMap="selectUserid">
+        SELECT user_id
+        FROM users
+        WHERE user_name=#{user_name}
+    </select>
+
+    <resultMap id="usermanager" type="com.ssm.po.usermanager">
+        <result property="user_name" column="user_name"/>
+        <result property="user_tel" column="user_tel"/>
+        <result property="address_add" column="address_add"/>
+    </resultMap>
+
+    <select id="selectManager" resultMap="usermanager" parameterType="int">
+        SELECT a.address_add,b.user_name,b.user_tel
+        FROM address a,users b
+        WHERE b.user_id=#{user_id} AND b.user_id=a.user_id AND a.address_state=1
+    </select>
+
+    <insert id="insertAddress" parameterType="com.ssm.pojo.Address">
+        INSERT INTO address
+        (user_id,address_tel,address_add,address_state,address_name)
+        VALUES (#{user_id},#{address_tel},#{address_add},#{address_state},#{address_name})
+    </insert>
+</mapper>

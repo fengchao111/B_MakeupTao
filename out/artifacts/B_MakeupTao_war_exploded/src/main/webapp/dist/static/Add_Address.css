@@ -1,0 +1,39 @@
+#add_address header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+  width: 100%;
+  padding: 0 20px;
+  /*margin-bottom: 20px;*/ }
+  #add_address header img {
+    width: 30px;
+    height: 30px; }
+  #add_address header p {
+    font-size: 30px;
+    line-height: 100px; }
+#add_address footer {
+  padding: 0 20px; }
+  #add_address footer form {
+    font-size: 25px;
+    line-height: 80px; }
+    #add_address footer form label {
+      margin-right: 20px;
+      width: 120px;
+      display: inline-block; }
+    #add_address footer form input {
+      border: none;
+      width: 500px;
+      height: 50px;
+      font-size: 25px;
+      line-height: 50px;
+      display: inline-block;
+      outline: none; }
+    #add_address footer form input:last-of-type {
+      font-size: 20px; }
+    #add_address footer form .line {
+      height: 3px;
+      background-color: #e7e7e7;
+      opacity: 0.2; }
+
+/*# sourceMappingURL=Add_Address.css.map */

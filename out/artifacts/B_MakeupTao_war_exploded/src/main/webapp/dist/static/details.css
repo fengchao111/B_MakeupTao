@@ -1,0 +1,98 @@
+#detailstotal input {
+  outline: none; }
+#detailstotal #section {
+  background-color: #e7e7e7 !important; }
+  #detailstotal #section .clearfix, #detailstotal #section .descript, #detailstotal #section .descript1, #detailstotal #section .choose {
+    background-color: white;
+    padding: 0 20px; }
+  #detailstotal #section .clearfix {
+    padding: 25px 20px 0 20px;
+    margin-top: 3px; }
+  #detailstotal #section #infor {
+    font-size: 28px;
+    line-height: 33px;
+    float: left;
+    width: 80%; }
+  #detailstotal #section #share {
+    float: right; }
+    #detailstotal #section #share img {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 6px;
+      margin-left: 25px; }
+    #detailstotal #section #share p {
+      color: #cccccc; }
+  #detailstotal #section .descript, #detailstotal #section .descript1 {
+    height: 60px;
+    line-height: 60px; }
+  #detailstotal #section .descript1 {
+    margin-bottom: 15px; }
+  #detailstotal #section .descript span {
+    color: #ff0000;
+    font-size: 45px; }
+  #detailstotal #section .descript1 span {
+    color: #898989;
+    font-size: 25px; }
+  #detailstotal #section .choose {
+    margin-bottom: 15px; }
+  #detailstotal #section .choose p, #detailstotal #section .choose div {
+    line-height: 80px;
+    font-size: 25px; }
+  #detailstotal #section .choose .partone {
+    padding: 0; }
+    #detailstotal #section .choose .partone p {
+      float: left;
+      width: 95%; }
+      #detailstotal #section .choose .partone p span {
+        margin-left: 400px; }
+    #detailstotal #section .choose .partone img {
+      width: 30px;
+      height: 30px; }
+  #detailstotal #section .choose .line1 {
+    background-color: #e7e7e7 !important;
+    height: 3px; }
+  #detailstotal #section .choose .parttwo {
+    padding: 0; }
+    #detailstotal #section .choose .parttwo div:nth-of-type(1) {
+      float: left;
+      width: 65%; }
+    #detailstotal #section .choose .parttwo div:nth-of-type(2) {
+      float: right;
+      width: 30%; }
+    #detailstotal #section .choose .parttwo input {
+      width: 45px;
+      height: 40px;
+      background-color: #f7f7f7 !important;
+      font-size: 30px;
+      text-align: center;
+      line-height: 40px; }
+    #detailstotal #section .choose .parttwo span {
+      margin: 0 10px; }
+#detailstotal footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  padding: 0 0 0 20px;
+  width: 100%;
+  background-color: white; }
+  #detailstotal footer .collection {
+    width: 15%;
+    float: left;
+    text-align: center;
+    padding-top: 17px; }
+    #detailstotal footer .collection img {
+      width: 40px;
+      height: 40px; }
+    #detailstotal footer .collection p {
+      color: #898989 !important; }
+  #detailstotal footer #join_shoppingcar {
+    float: right;
+    width: 200px;
+    height: 70px;
+    background-color: #ff0000 !important;
+    color: white;
+    text-align: center;
+    line-height: 70px;
+    font-size: 30px; }
+
+/*# sourceMappingURL=details.css.map */

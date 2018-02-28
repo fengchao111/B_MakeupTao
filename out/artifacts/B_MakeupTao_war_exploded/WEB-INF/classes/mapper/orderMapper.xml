@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.mapper.Order_add">
+    <select id="proshop_select" parameterType="int" resultType="com.ssm.pojo.Pro_shop">
+        SELECT * FROM pro_shop WHERE pro_shop_id=#{param0}
+    </select>
+    <select id="selectname" parameterType="int" resultType="String">
+        SELECT product_name FROM products WHERE product_id=#{product_id}
+    </select>
+    <insert id="insertorder" parameterType="com.ssm.pojo.Orders"  useGeneratedKeys="true" keyProperty="order_id">
+        INSERT INTO orders(user_id,order_state,order_time,address_id,order_money,order_message) VALUES (#{user_id},#{order_state},#{order_time},#{address_id},#{order_money},#{order_message});
+    </insert>
+    <insert id="insertpro_shop_order" parameterType="com.ssm.pojo.Pro_shop_order">
+        INSERT INTO pro_shop_order (pro_shop_id,order_id,pro_shop_order_price,pro_shop_order_oldprice,pro_shop_order_name,pro_shop_order_number) VALUES (#{pro_shop_id},#{order_id},#{pro_shop_order_price},#{pro_shop_order_oldprice},#{pro_shop_order_name},#{pro_shop_order_number})
+    </insert>
+    <delete id="deletecarts" parameterType="int" >
+        DELETE  FROM carts WHERE cart_id=1
+    </delete>
+</mapper>

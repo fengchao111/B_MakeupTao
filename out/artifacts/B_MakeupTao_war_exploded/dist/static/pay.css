@@ -1,0 +1,149 @@
+@charset "UTF-8";
+#makesure header, #makesure #address, #makesure footer {
+  padding: 0 20px 0 20px; }
+
+#makesure {
+  background-color: #e7e7e7;
+  /*这里是头部样式*/
+  /*这里是收货地址样式*/
+  /*商品信息样式*/
+  /*结算*/ }
+  #makesure .lines2 {
+    background-color: #d7d7d7;
+    height: 2px;
+    margin: 0; }
+  #makesure header {
+    z-index: 3;
+    width: 100%;
+    background-color: #ff0000;
+    height: 100px;
+    /*margin-bottom: 20px;*/
+    padding: 0 20px;
+    /*position: relative;*/
+    position: fixed;
+    top: 0;
+    left: 0; }
+    #makesure header #arrow_left {
+      width: 30px;
+      height: 30px;
+      position: absolute;
+      margin-top: -15px;
+      top: 50%; }
+    #makesure header p {
+      line-height: 100px;
+      width: 200px;
+      font-size: 30px;
+      color: #ffffff;
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+      text-align: center;
+      /*<!--margin-left: -100px;-->*/
+      /*<!--margin-top: -40px;-->*/ }
+  #makesure #address {
+    background-color: white;
+    margin: 130px 0 0 0;
+    padding-bottom: 30px;
+    width: 100%;
+    line-height: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 25px; }
+    #makesure #address #address_picture {
+      width: 30px;
+      height: 30px; }
+    #makesure #address #address_leftpart {
+      flex-grow: 2.2;
+      /*#address_infor{*/
+      /*height: 80px;*/
+      /*}*/ }
+      #makesure #address #address_leftpart #address_infortitle {
+        margin-left: 55px; }
+    #makesure #address #address_picture {
+      width: 50px;
+      height: 50px; }
+    #makesure #address #address_rightpart {
+      width: 115px;
+      flex-wrap: wrap;
+      flex-direction: row-reverse;
+      display: flex;
+      /*img{*/
+      /*width: 30px;*/
+      /*height: 30px;*/
+      /*}*/ }
+      #makesure #address #address_rightpart #telephone {
+        line-height: 30px; }
+  #makesure .goods {
+    width: 100%;
+    padding-top: 20px;
+    margin-top: 10px;
+    background-color: white; }
+    #makesure .goods .goods_up {
+      background-color: #f7f7f7;
+      padding: 15px; }
+      #makesure .goods .goods_up .goods_picture {
+        width: 170px;
+        height: 170px;
+        margin-right: 20px;
+        float: left; }
+      #makesure .goods .goods_up .goods_upright {
+        width: 525px;
+        float: right;
+        font-size: 23px; }
+        #makesure .goods .goods_up .goods_upright p {
+          line-height: 25px;
+          margin-bottom: 10px; }
+      #makesure .goods .goods_up p:nth-of-type(2) span {
+        color: #898989; }
+      #makesure .goods .goods_up p:nth-of-type(4) span {
+        color: #ff0000;
+        font-size: 28px; }
+  #makesure .goods_down {
+    background-color: white; }
+    #makesure .goods_down .footer_left {
+      padding: 0 15px;
+      line-height: 70px;
+      font-size: 25px;
+      float: left;
+      width: 500px; }
+      #makesure .goods_down .footer_left input {
+        margin-left: 105px;
+        width: 600px;
+        border: none;
+        outline: none; }
+    #makesure .goods_down .footer_right {
+      float: right;
+      padding: 0 15px;
+      line-height: 70px;
+      font-size: 25px; }
+  #makesure #accounts {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 20px 0 0 325px; }
+    #makesure #accounts #total_money {
+      color: #ff0000; }
+    #makesure #accounts p {
+      display: inline-block;
+      width: 220px;
+      line-height: 50px;
+      float: right;
+      font-size: 20px; }
+    #makesure #accounts #makesure_order {
+      float: right;
+      width: 130px;
+      height: 50px;
+      background-color: #ff0000;
+      color: #ffffff;
+      /*margin-left: 88px;*/ }
+  #makesure #last {
+    width: 700px;
+    height: 1700px;
+    background-color: yellowgreen; }
+
+/*# sourceMappingURL=pay.css.map */

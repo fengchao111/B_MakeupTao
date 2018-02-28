@@ -1,0 +1,40 @@
+#choose_address .input0 {
+  color: #f19149; }
+#choose_address header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+  width: 100%;
+  padding: 0 20px;
+  /*margin-bottom: 20px;*/ }
+  #choose_address header img {
+    width: 30px;
+    height: 30px; }
+  #choose_address header p {
+    font-size: 30px;
+    line-height: 100px; }
+#choose_address footer {
+  background-color: #e7e7e7e7;
+  font-size: 25px; }
+  #choose_address footer .address_infor {
+    background-color: white;
+    padding: 0 20px;
+    margin-bottom: 15px; }
+    #choose_address footer .address_infor p {
+      display: inline-block;
+      width: 330px;
+      line-height: 80px; }
+    #choose_address footer .address_infor .telephone {
+      text-align: right; }
+    #choose_address footer .address_infor .address {
+      width: 100%;
+      line-height: 40px; }
+    #choose_address footer .address_infor span {
+      line-height: 80px;
+      color: black; }
+    #choose_address footer .address_infor .line1 {
+      height: 3px;
+      background-color: #e7e7e7e7; }
+
+/*# sourceMappingURL=Choose_Address.css.map */

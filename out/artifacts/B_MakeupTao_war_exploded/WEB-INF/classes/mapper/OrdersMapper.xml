@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.mapper.OrdersMapper">
+
+
+    <!--查询用户订单-->
+    <resultMap id="some" type="com.ssm.pojo.Orders">
+        <id column="order_id" property="order_id"/>
+        <result column="order_id" property="order_id"/>
+        <result column="order_time" property="order_time"/>
+        <result column="order_money" property="order_money"/>
+        <result column="order_state" property="order_state"/>
+
+        <collection property="pro_shops" ofType="com.ssm.pojo.Pro_shop">
+            <id column="pro_shop_id" property="pro_shop_id"/>
+            <result column="pro_shop_pic" property="pro_shop_pic"/>
+            <result column="pro_shop_desc" property="pro_shop_desc"/>
+            <result column="pro_shop_spec" property="pro_shop_spec"/>
+            <!--<result column="product_id" property="product_id"/>-->
+            <association property="shops" javaType="com.ssm.pojo.Shops">
+                <id column="shop_id" property="shop_id"/>
+                <result column="shop_name" property="shop_name"/>
+            </association>
+            <association property="pro_shop_orders"  javaType="com.ssm.pojo.Pro_shop_order">
+                <id column="pro_shop_order_id" property="pro_shop_order_id"/>
+                <result column="pro_shop_order_id" property="pro_shop_order_id"/>
+                <result column="pro_shop_order_number" property="pro_shop_order_number"/>
+                <result column="pro_shop_order_price" property="pro_shop_order_price"/>
+                <result column="pro_shop_order_oldprice" property="pro_shop_order_oldprice"/>
+                <result column="pro_shop_order_name" property="pro_shop_order_name"/>
+            </association>
+        </collection>
+    </resultMap>
+
+
+<!--查询用户订单详情-->
+    <resultMap id="details" type="com.ssm.pojo.Orders">
+        <id column="order_id" property="order_id"/>
+        <result column="order_id" property="order_id"/>
+        <result column="order_time" property="order_time"/>
+        <result column="order_money" property="order_money"/>
+        <result column="order_message" property="order_message"/>
+
+        <collection property="pro_shops" ofType="com.ssm.pojo.Pro_shop">
+            <id column="pro_shop_id" property="pro_shop_id"/>
+            <result column="pro_shop_pic" property="pro_shop_pic"/>
+            <!--<result column="product_id" property="product_id"/>-->
+            <result column="pro_shop_spec" property="pro_shop_spec"/>
+            <result column="pro_shop_desc" property="pro_shop_desc"/>
+            <association property="pro_shop_orders"  javaType="com.ssm.pojo.Pro_shop_order">
+                <id column="pro_shop_order_id" property="pro_shop_order_id"/>
+                <result column="pro_shop_order_id" property="pro_shop_order_id"/>
+                <result column="pro_shop_order_name" property="pro_shop_order_name"/>
+                <result column="pro_shop_order_price" property="pro_shop_order_price"/>
+                <result column="pro_shop_order_oldprice" property="pro_shop_order_oldprice"/>
+                <result column="pro_shop_order_number" property="pro_shop_order_number"/>
+            </association>
+        </collection>
+        <collection property="address" ofType="com.ssm.pojo.Address">
+            <id column="address_id" property="address_id"/>
+            <result column="address_name" property="address_name"/>
+            <result column="address_add" property="address_add"/>
+            <result column="address_tel" property="address_tel"/>
+        </collection>
+    </resultMap>
+
+
+
+
+
+     <select id="selectSomeOrder" parameterType="com.ssm.pojo.Users" resultMap="some">
+         SELECT *
+         FROM orders o,pro_shop_order pso,pro_shop ps,shops s
+         WHERE o.order_id=pso.order_id
+           AND ps.pro_shop_id=pso.pro_shop_id
+           AND s.shop_id=ps.shop_id
+           AND o.user_id=#{user_id}
+           AND o.order_state=#{user_sex}
+           ORDER BY o.order_id
+     </select>
+
+
+    <select id="selectOrderDetails" parameterType="com.ssm.pojo.Orders" resultMap="details">
+    SELECT * from orders o,address a,pro_shop ps,pro_shop_order pso
+    where o.order_id=#{order_id}
+    AND o.order_id=pso.order_id
+    AND ps.pro_shop_id=pso.pro_shop_id
+    AND o.address_id=a.address_id
+   </select>
+
+
+    <update id="cancleOrder" parameterType="com.ssm.pojo.Orders">
+        UPDATE orders set order_state=4 where order_id=#{order_id}
+    </update>
+
+
+    <update id="sureOrder" parameterType="com.ssm.pojo.Orders">
+        UPDATE  orders set order_state=5 where order_id=#{order_id}
+    </update>
+
+    <delete id="deleteOrder" parameterType="com.ssm.pojo.Orders">
+        DELETE from orders where order_id=#{order_id}
+    </delete>
+</mapper>
+

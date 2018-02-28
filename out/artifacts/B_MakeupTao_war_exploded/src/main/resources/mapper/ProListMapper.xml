@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.mapper.ProListMapper">
+    <!--<resultMap id="BaseProducts" type="com.ssm.pojo.Pro_shop" >-->
+        <!--<result column="pro_shop_id" property="pro_shop_id"/>-->
+        <!--<result column="pro_shop_pic" property="pro_shop_pic"/>-->
+        <!--<result column="pro_shop_desc" property="pro_shop_desc"/>-->
+        <!--<result column="pro_shop_price" property="pro_shop_price"/>-->
+        <!--<result column="pro_shop_sale" property="pro_shop_sale"/>-->
+        <!--<association property="pro_shop" javaType="com.ssm.pojo.Products">-->
+            <!--<result column="kind_id" property="kind_id"/>-->
+        <!--</association>
+        </resultMap>-->
+    <!--<resultMap id="BaseProducts" type="com.ssm.pojo.Products" >-->
+        <!--<result column="kind_id" property="kind_id"/>-->
+        <!--<association property="pro_shop" javaType="com.ssm.pojo.Pro_shop">-->
+            <!--<result column="pro_shop_id" property="pro_shop_id"/>-->
+            <!--<result column="pro_shop_pic" property="pro_shop_pic"/>-->
+            <!--<result column="pro_shop_desc" property="pro_shop_desc"/>-->
+            <!--<result column="pro_shop_price" property="pro_shop_price"/>-->
+            <!--<result column="pro_shop_sale" property="pro_shop_sale"/>-->
+        <!--</association>-->
+    <!--</resultMap>-->
+
+ <!--分页加载-->
+    <select id="selectPage"  parameterType="int" resultType="com.ssm.pojo.Pro_shop">
+    SELECT pro_shop_id,pro_shop_pic,pro_shop_desc,pro_shop_price,pro_shop_sale FROM pro_shop limit #{start},32;
+    </select>
+
+    <!--品牌-->
+    <select id="selectBrand"  resultType="com.ssm.pojo.Brands">
+        SELECT brand_id, brand_name FROM brands;
+    </select>
+    <select id="selectProByBrand" parameterType="String" resultType="com.ssm.pojo.Pro_shop">
+        SELECT pro_shop_id,pro_shop_pic,pro_shop_desc,pro_shop_price,pro_shop_sale FROM  pro_shop WHERE pro_shop_brand=#{brand_name1};
+</select>
+    <!--种类-->
+    <!--<select id="selectKindMax"  resultType="com.ssm.pojo.Kinds">-->
+        <!--SELECT DISTINCT(kind_max) FROM kinds;-->
+    <!--</select>-->
+    <select id="selectKindMin" parameterType="String"  resultType="com.ssm.pojo.Kinds">
+        SELECT * FROM kinds WHERE kind_max=#{kind};
+    </select>
+
+    <select id="selProByKindMin" parameterType="int" resultType="com.ssm.pojo.Pro_shop">
+    SELECT pro_shop.pro_shop_id,pro_shop.pro_shop_pic,pro_shop.pro_shop_desc,pro_shop.pro_shop_price,pro_shop.pro_shop_sale
+    FROM pro_shop WHERE pro_shop_kind=#{kind_id};
+    </select>
+
+
+    <!--<select id="selProByKindMin" parameterType="int" resultMap="BaseProducts">-->
+        <!--SELECT pro_shop.pro_shop_id,pro_shop.pro_shop_pic,pro_shop.pro_shop_desc,pro_shop.pro_shop_price,pro_shop.pro_shop_sale,products.kind_id-->
+        <!--FROM pro_shop,products WHERE pro_shop.product_id=products.product_id AND kind_id=#{kind_id};-->
+    <!--</select>-->
+
+    <!--上市-->
+    <select id="selectProMarket" resultType="com.ssm.pojo.Pro_shop">
+        SELECT pro_shop_id,pro_shop_pic,pro_shop_desc,pro_shop_sale,pro_shop_price,pro_shop_time from pro_shop ORDER by pro_shop_time DESC ;
+    </select>
+    <!--价格-->
+    <select id="selectProPriceASC"  resultType="com.ssm.pojo.Pro_shop">
+        SELECT pro_shop_pic,pro_shop_desc,pro_shop_price,pro_shop_sale FROM pro_shop ORDER BY pro_shop_price ASC;
+    </select>
+    <select id="selectProPriceDESC"  resultType="com.ssm.pojo.Pro_shop">
+        SELECT pro_shop_pic,pro_shop_desc,pro_shop_price,pro_shop_sale FROM pro_shop ORDER BY pro_shop_price DESC;
+    </select>
+    <!--销量-->
+    <select id="selectProSale"  resultType="com.ssm.pojo.Pro_shop">
+        SELECT pro_shop_pic,pro_shop_desc,pro_shop_price,pro_shop_sale FROM pro_shop ORDER BY pro_shop_sale DESC;
+    </select>
+</mapper>

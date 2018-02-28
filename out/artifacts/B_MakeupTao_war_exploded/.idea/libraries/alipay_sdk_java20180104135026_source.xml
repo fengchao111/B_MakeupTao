@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="alipay-sdk-java20180104135026-source">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/commons-logging-1.1.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/commons-logging-1.1.1-sources.jar!/" />
+    </SOURCES>
+    <excluded>
+      <root url="jar://$PROJECT_DIR$/lib/commons-logging-1.1.1.jar!/" />
+    </excluded>
+  </library>
+</component>

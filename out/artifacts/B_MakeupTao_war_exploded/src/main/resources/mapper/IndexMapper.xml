@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.mapper.IndexMapper">
+
+    <resultMap id="ps" type="com.ssm.pojo.Pro_shop">
+        <id column="pro_shop_id" property="pro_shop_id"/>
+        <result column="pro_shop_price" property="pro_shop_price"/>
+        <result column="pro_shop_pic" property="pro_shop_pic"/>
+        <result column="pro_shop_sale" property="pro_shop_sale"/>
+        <association property="products" javaType="com.ssm.pojo.Products">
+            <result column="product_name" property="product_name"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="ss" type="com.ssm.pojo.Active">
+        <association property="pro_shop" javaType="com.ssm.pojo.Pro_shop">
+            <id property="pro_shop_id" column="pro_shop_id"/>
+            <result property="pro_shop_pic" column="pro_shop_pic"/>
+        </association>
+    </resultMap>
+
+    <select id="getAllKindMax" resultType="com.ssm.pojo.Kinds">
+        SELECT MIN(kind_max) kind_max,max_photo FROM kinds GROUP BY kind_max
+    </select>
+
+    <select id="getMinKind" parameterType="String" resultType="com.ssm.pojo.Kinds">
+        SELECT kind_id,kind_min,min_photo FROM kinds WHERE kind_max=#{param0}
+    </select>
+
+    <select id="getHostGoods" resultMap="ps">
+        SELECT ps.pro_shop_id, ps.pro_shop_price, ps.pro_shop_pic,MAX(ps.pro_shop_sale) pro_shop_sale, pr.product_name
+        FROM pro_shop ps,products pr
+        WHERE  pr.product_id=ps.product_id and ps.pro_shop_state=1
+        Group BY ps.product_id,ps.shop_id
+        ORDER BY pro_shop_sale DESC
+        limit 0,10
+    </select>
+
+    <select id="getBrands" resultType="com.ssm.pojo.Brands">
+        SELECT * FROM brands
+    </select>
+
+    <select id="getIndexSlideshow" resultMap="ss">
+        SELECT ps.pro_shop_pic , ps.pro_shop_id FROM active ac,pro_shop ps WHERE ac.pro_shop_id=ps.pro_shop_id limit 0,5
+    </select>
+</mapper>

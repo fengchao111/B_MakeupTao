@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.mapper.ProDetailMapper">
+
+  <select id="selectProDetail" parameterType="int" resultType="com.ssm.pojo.Pro_shop">
+    SELECT pro_shop_pic,pro_shop_desc,pro_shop_price,pro_shop_oldprice,pro_shop_sale,pro_shop_spec ,pro_shop_num FROM pro_shop WHERE pro_shop_id=#{pro_shop_id};
+ </select>
+
+ <update id="addLook" parameterType="com.ssm.pojo.Pro_shop">
+    UPDATE pro_shop SET pro_shop_look =pro_shop_look+1 WHERE pro_shop_id=#{pro_shop_id};
+ </update>
+
+  <insert id="insertFeet" parameterType="com.ssm.pojo.Feet">
+   INSERT INTO feet (user_id,pro_shop_id,feet_time) VALUES (#{user_id},#{pro_shop_id},#{feet_time});
+  </insert>
+
+  <insert id="insertCollect" parameterType="com.ssm.pojo.Collect">
+     INSERT INTO collect(user_id,pro_shop_id) VALUES (#{user_id},#{pro_shop_id});
+  </insert>
+</mapper>

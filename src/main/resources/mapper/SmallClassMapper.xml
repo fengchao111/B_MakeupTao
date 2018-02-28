@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.mapper.SmallClassMapper">
+
+
+    <!--<insert id="addUser" parameterType="com.ssm.pojo.Products">-->
+    <!--insert into user(uname,email,age)-->
+    <!--values(#{uname},#{email},  #{age})-->
+    <!--</insert>-->
+
+    <insert id="newSmallClass" parameterType="com.ssm.pojo.Kinds">
+        INSERT INTO kinds ( kind_max, kind_min ) VALUES ( #{kind_max},#{kind_min} );
+    </insert>
+    <select id="selectSmallClass"  parameterType="String" resultType="String">
+        select kind_min from kinds where kind_max=#{kind_max}
+    </select>
+
+    <delete id="deleteSmallClass" parameterType="String">
+        DELETE FROM kinds WHERE kind_min=#{kind_min}
+    </delete>
+</mapper>

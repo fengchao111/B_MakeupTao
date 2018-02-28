@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.mapper.ProductMapper">
+
+
+    <!--<insert id="addUser" parameterType="com.ssm.pojo.Products">-->
+        <!--insert into user(uname,email,age)-->
+        <!--values(#{uname},#{email},  #{age})-->
+    <!--</insert>-->
+    <!-- 商品表插入时返回值类型-->
+    <resultMap id="BaseResultMap" type="com.ssm.pojo.Products" >
+        <id column="product_id" property="product_id" jdbcType="BIGINT" />
+        <result column="product_name" property="product_name" jdbcType="VARCHAR" />
+        <result column="brand_id" property="brand_id" jdbcType="BIGINT" />
+        <result column="kind_id" property="kind_id" jdbcType="BIGINT" />
+    </resultMap>
+    <!-- 商品商家表返回值类型-->
+    <resultMap id="shop" type="com.ssm.pojo.Pro_shop">
+        <id column="pro_shop_id" property="pro_shop_id"/>
+        <result column="product_id" property="product_id"/>
+        <result column="shop_id" property="shop_id"  />
+        <result column="pro_shop_pic" property="pro_shop_pic"/>
+        <result column="pro_shop_price" property="pro_shop_price"/>
+        <result column="pro_shop_oldprice" property="pro_shop_oldprice"/>
+        <result column="pro_shop_num" property="pro_shop_num"/>
+        <result column="pro_shop_state" property="pro_shop_state"/>
+        <result column="pro_shop_spec" property="pro_shop_spec"/>
+        <result column="pro_shop_desc" property="pro_shop_desc"/>
+        <result column="pro_shop_sale" property="pro_shop_sale"/>
+        <result column="pro_shop_time" property="pro_shop_time"/>
+        <result column="pro_shop_look" property="pro_shop_look"/>
+        <result column="pro_shop_kind" property="pro_shop_kind"/>
+        <result column="pro_shop_brand" property="pro_shop_brand"/>
+    </resultMap>
+    <!-- 多表查询（商品表与商品——商家关联表）的返回值类型-->
+    <resultMap id="BaseProducts" type="com.ssm.pojo.Products" >
+        <id column="product_id" property="product_id" jdbcType="BIGINT" />
+        <result column="product_name" property="product_name" jdbcType="VARCHAR" />
+        <result column="brand_id" property="brand_id" jdbcType="BIGINT" />
+        <result column="kind_id" property="kind_id" jdbcType="BIGINT" />
+        <association property="pro_shop" javaType="com.ssm.pojo.Pro_shop">
+            <id column="pro_shop_id" property="pro_shop_id" />
+            <result column="product_id" property="product_id"/>
+            <result column="shop_id" property="shop_id"/>
+            <result column="pro_shop_pic" property="pro_shop_pic"/>
+            <result column="pro_shop_price" property="pro_shop_price"/>
+            <result column="pro_shop_oldprice" property="pro_shop_oldprice"/>
+            <result column="pro_shop_num" property="pro_shop_num"/>
+            <result column="pro_shop_state" property="pro_shop_state"/>
+            <result column="pro_shop_spec" property="pro_shop_spec"/>
+            <result column="pro_shop_desc" property="pro_shop_desc"/>
+            <result column="pro_shop_sale" property="pro_shop_sale"/>
+            <result column="pro_shop_time" property="pro_shop_time"/>
+            <result column="pro_shop_look" property="pro_shop_look"/>
+            <result column="pro_shop_kind" property="pro_shop_kind"/>
+            <result column="pro_shop_brand" property="pro_shop_brand"/>
+        </association>
+    </resultMap>
+    <!--//查询商品信息-->
+    <select id="SelectAll" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select * from products
+    </select>
+    <!--//查询商品的详细信息（多表查询）-->
+    <select id="SelectPro" resultMap="BaseProducts" parameterType="java.lang.Long" >
+        SELECT products.product_name ,pro_shop.* FROM pro_shop,products WHERE products.product_id=pro_shop.product_id
+    </select>
+    <!--//   添加商品-->
+    <insert id="InsertPro" parameterType="com.ssm.pojo.Products" useGeneratedKeys="true" keyProperty="product_id">
+        INSERT INTO products(product_name,brand_id,kind_id)
+        VALUES(#{product_name},#{brand_id},#{kind_id})
+    </insert>
+    <!--//添加商品与商家表的数据-->
+    <insert id="InsertShop" parameterType="com.ssm.pojo.Pro_shop">
+        INSERT INTO pro_shop(product_id,shop_id,pro_shop_pic,pro_shop_price,pro_shop_oldprice,pro_shop_num,pro_shop_state,pro_shop_spec,pro_shop_desc,pro_shop_sale,pro_shop_time,pro_shop_look,pro_shop_kind,pro_shop_brand)
+        VALUES (#{product_id},#{shop_id},#{pro_shop_pic},#{pro_shop_price},#{pro_shop_oldprice},#{pro_shop_num},#{pro_shop_state},#{pro_shop_spec},#{pro_shop_desc},#{pro_shop_sale},#{pro_shop_time},#{pro_shop_look},#{pro_shop_kind},#{pro_shop_brand})
+    </insert>
+
+    <!--//返回商品总条数-->
+    <select id="Total" resultType="java.lang.Integer">
+      SELECT COUNT(*) AS AllRecord FROM products
+    </select>
+    <!--//传入该页的首条数据，和该页面的总条数(多表查询)-->
+    <select id="Page" parameterType="com.ssm.pojo.Page" resultMap="BaseProducts">
+        SELECT products.product_name ,pro_shop.* FROM pro_shop,products WHERE products.product_id=pro_shop.product_id LIMIT #{start},#{size}
+    </select>
+    <!--//根据商品ID下架商品 正常状态：1  下架：2   删除：3（只能下架在售商品）-->
+    <update id="DownShop" parameterType="java.lang.Integer">
+        UPDATE pro_shop SET pro_shop_state=2 WHERE product_id=#{product_id}
+    </update>
+    <!--//根据商品id删除商品（其实是让商品状态改变为3）只能删除已下架商品-->
+    <update id="DeleteShop" parameterType="java.lang.Integer">
+        UPDATE pro_shop SET pro_shop_state=3 WHERE product_id=#{product_id}
+    </update>
+    <!--//重新上架商品   -->
+    <update id="UpShop" parameterType="java.lang.Integer">
+        UPDATE pro_shop SET pro_shop_state=1 WHERE product_id=#{product_id}
+    </update>
+    <!--修改价格-->
+    <update id="updatePrice" parameterType="com.ssm.pojo.Products" >
+        UPDATE pro_shop SET pro_shop_price=#{pro_shop_price},pro_shop_oldprice=#{pro_shop_oldprice} WHERE product_id=#{product_id}
+    </update>
+
+    <!--查询所有品牌-->
+    <select id="selectBrands" resultType="com.ssm.pojo.Brands">
+        SELECT * FROM brands
+    </select>
+    <!--//根据大类查询改大类下的所有小类-->
+    <select id="selectKindMin" resultType="com.ssm.pojo.Kinds" parameterType="java.lang.String">
+        SELECT * FROM kinds WHERE kind_max=#{kind_max}
+    </select>
+    <!--//根据小类名称查询的ID-->
+    <select id="selectKindId" resultType="com.ssm.pojo.Kinds" parameterType="java.lang.String">
+        SELECT * FROM kinds WHERE kind_min=#{kind_min}
+    </select>
+</mapper>
